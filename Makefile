@@ -6,7 +6,7 @@ include config.mk
 SRC = drw.c dwm.c util.c
 OBJ = ${SRC:.c=.o}
 
-all: options dwm
+all: options config dwm
 
 options:
 	@echo dwm build options:
@@ -19,7 +19,7 @@ options:
 
 ${OBJ}: config.h config.mk
 
-config.h:
+config.h: config.def.h
 	cp config.def.h $@
 
 dwm: ${OBJ}
@@ -48,4 +48,6 @@ uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
 
-.PHONY: all options clean dist install uninstall
+config: config.h
+
+.PHONY: all options clean dist install uninstall config
